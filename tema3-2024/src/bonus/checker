@@ -1,0 +1,20 @@
+#!/bin/bash
+
+TASKS=0
+mkdir -p out
+
+check_one() {
+	./functional < in/$1.in > out/$1.out
+	if cmp --silent -- out/$1.out ref/$1.ref; then
+		printf "Test %02d ................. PASSED: 1.5p\n" $1
+		TASKS=$(($TASKS + 1))
+	else
+		printf "Test %02d ................. FAILED: 0.0p\n" $1
+	fi
+}
+
+echo "---------------TASK BONUS---------------"
+for i in $(seq 1 20); do
+	check_one $i
+done
+printf "\nTASK BONUS SCORE: %.2f / 30.00\n\n" $(echo "scale=2; $TASKS*1.5" | bc)

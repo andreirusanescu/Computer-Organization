@@ -1,0 +1,72 @@
+# Rusanescu Andrei-Marian 313CC
+
+Task 1 - Paranthesinator
+
+The main idea is that the programme iterates through each character
+of the string until it reaches the null terminator. If the character
+at position i in the buffer is an opening bracket, it is added to the
+stack, otherwise the stack peak is compared with an opening bracket of
+the same type as the closing one. If at any moment, the brackets are not
+closing correctly, the checking ends. In the end, the stack should be empty.
+
+Task 2
+
+2.1. Quick sort
+
+Firstly, the preserved registers should be saved, due to them being used
+in other functions in the programme. The buffer's address is in ecx, start
+index in edx, end index ebx. Quick sort works while start is strictly lower
+than the end index. For simplicity the pivot is chosen as buff[start].
+The pivot is then swapped with the middle value, due to the partitioning
+phase of the code. Afterwards, the array should be 'split' in 2 sides, the
+left side containing numbers lower than the pivot, the right side containing
+numbers greater than the pivot. Iterating from start to end, if a number
+from the left side is greater than one from the right side, they are swapped,
+and a binary variable (0 | 1) is changed to either 0 or 1. Starting index is
+incremented with the value of the binary variable, while ending index is
+decremented with the complementary value of it (1 - k). This loop is done
+while the starting index is lower than the ending index. After the looping
+process, the recursive call comes in. The function calls itself just like
+calling another function.
+
+
+2.2. Binary search
+
+This version of the binary search uses fastcall convention, whilst also being
+recursive so the access to the arguments of the function is faster. Only the
+start and end index are stored in memory. If the middle value of the split
+array is the wanted one, the searching ends. Otherwise, the value is looked
+for in the left side or the right side of the array, corresponding to how it
+compares to the middle value, if it's lower, then the search starts in the
+left side. If the value was not found, meaning that starting index got higher
+than the ending index, the function returns -1 code, mid position respectively
+for found wanted value.
+
+
+3. DFS
+
+The function takes the node and a pointer to a function that gives the list
+of neighbours as args. Every unvisited node is printed and marked in an array
+of visited nodes. The list of neighbours is stored as a structure that
+contains the number of neighbours and an array of them. Iterating through each
+neighbour, if the neighbour is not visited, the function calls itself with
+the neighbour node.
+
+
+Bonus - Functionals
+
+Map
+
+Using gdb on the main file, it can be seen that rdi contains the address of
+the destination array, whilst rsi the one for the source, rdx the array size,
+rcx a pointer to a function that maps src to dst. Iterating through each
+element of the src, map function uses rdi as src[i]. The ret value is stored
+in rax and moved to dst[i].
+
+Reduce
+
+Using gdb again, it is obvious that the main uses rsi as the src address, rdi
+for dst, rcx as the initial accumulator, r8 as the pointer to the function
+taken by the reduce functional. Iterating through each element of the src
+array, in reduce it is called the anonymous function with the accumulator and
+src[i] as arguments. The return value is the new accumulator.
